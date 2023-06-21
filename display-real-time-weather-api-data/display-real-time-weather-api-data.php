@@ -1,13 +1,26 @@
 <?php
 /*
 Plugin Name:  Display Real Time Weather API Data  
-Description:  This Plugin Display Weather Information On Your Site Through Shortcode. It will be displayed on the Plugins page in WordPress admin area. 
+Description:  This Plugin Display Weather Information On Your Site Through Shortcode. It will be displayed on the Settings in WordPress admin area. 
 Version:      1.0
 Author:       Code Corners 
 Author URI:   https://codecorners.in
 Text Domain:  display-real-time-weather-api-data
 */
 
+	//If this file is called directly, abort!!!
+	defined( 'ABSPATH' ) or die('Access denied!');
+
+	//Define Dirpath for hooks
+	define( 'DIR_PATH', plugin_dir_path( __FILE__ ) );
+
+	wp_enqueue_script('script', plugins_url( '/js/script.js' , __FILE__ ) , array( 'jquery' ),'',true );
+       
+    wp_localize_script( 'ajax', 'MyAjax', array( 'ajaxurl' => admin_url( 'admin-ajax.php')));
+
+    wp_enqueue_style( 'style', plugins_url( '/css/style.css', __FILE__ ),array(),'all' );
+
+    include('includes/shortcodes.php');
 
 	function drtwad_add_settings_page() {
 	    add_options_page( 'Real Time Weather API Data', 'Real Time Weather API Data', 'manage_options', 'drt_weather_api_data', 'drtwad_render_plugin_settings_page' );
@@ -29,7 +42,7 @@ Text Domain:  display-real-time-weather-api-data
 	    <?php
 	}
 
-	function dbi_register_settings() {
+	function register_settings() {
 
 	    register_setting( 'drt_weather_api_data_options', 'drt_weather_api_data_options', 'drt_weather_api_data_options_validate' );
 
@@ -44,7 +57,7 @@ Text Domain:  display-real-time-weather-api-data
 	    add_settings_field( 'drtwa_data_setting_temp_type', 'Temperature Type', 'drtwa_data_setting_temp_type', 'drt_weather_api_data', 'api_settings' );
 	    
 	}
-	add_action( 'admin_init', 'dbi_register_settings' );
+	add_action( 'admin_init', 'register_settings' );
 
 	function drt_weather_api_data_options_validate( $input ) {
 
@@ -82,5 +95,7 @@ Text Domain:  display-real-time-weather-api-data
 	    echo "<select name='drt_weather_api_data_options[temp_type]' id='drtwa_data_setting_temp_type'><option value='temp_c'>".strtoupper('celsius')." (℃)</option><option value='temp_f'>".strtoupper('fahrenheit')." (℉)</option></select>";
 	}
 
-
-
+	public function getWeatherApiData($url=''){
+		$url = 'http://api.weatherapi.com/v1/forecast.json?key=1231e2e03e0f48cfb6375659232106&q=chandigarh&days=3&aqi=yes&alerts=yes';
+	
+	}
