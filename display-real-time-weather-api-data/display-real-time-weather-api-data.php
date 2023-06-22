@@ -23,6 +23,7 @@ Text Domain:  display-real-time-weather-api-data
 
     
 	include('includes/shortcodes.php');
+	include('includes/weather_api_data.php');
 
     if ( !function_exists('add_settings_page') ) {
 		function add_settings_page() {
@@ -39,19 +40,17 @@ Text Domain:  display-real-time-weather-api-data
 	    <form action="options.php" method="post">
 	        <?php 
 		        settings_fields( 'weather_api_data_options' );
-		        do_settings_sections( 'weather_api_data' ); 
+		        do_settings_sections( 'weather_api_data_options' ); 
 		        submit_button( 'Save Settings' );	
 	        ?>
 	    </form>
 	    <?php
 
 	     $test = do_shortcode( '[weathertoday]' );
+	  
 	     echo "<pre>";
-	     print_r($test);
-	     echo "<br/>";
-	     $options = get_option( 'weather_api_data_options' );
-	     echo "<pre>";
-	     print_r( $options);
+	     print_r( $test);
+	     echo "</pre>";
 	}
 
 	if (!function_exists('register_settings')){
@@ -60,15 +59,21 @@ Text Domain:  display-real-time-weather-api-data
 
 		    register_setting( 'weather_api_data_options', 'weather_api_data_options', 'weather_api_data_options_validate' );
 
-		    add_settings_section( 'api_settings', 'API Settings', 'data_section_text', 'weather_api_data' );
+		    add_settings_section( 'api_settings', 'API Settings', 'data_section_text', 'weather_api_data_options' );
 
-		    add_settings_field( 'data_setting_api_key', 'API Key', 'data_setting_api_key', 'weather_api_data', 'api_settings' );
+		    add_settings_field( 'weather_api_key', 'API Key', 'weather_api_key', 'weather_api_data_options', 'api_settings' );
 
-		    add_settings_field( 'data_setting_location', 'Location', 'data_setting_location', 'weather_api_data', 'api_settings' );
+		    add_settings_field( 'weather_api_location', 'Location', 'weather_api_location', 'weather_api_data_options', 'api_settings' );
 
-		    add_settings_field( 'data_setting_days', 'Days', 'data_setting_days', 'weather_api_data', 'api_settings' );
+		    add_settings_field( 'weather_api_days', 'Days', 'weather_api_days', 'weather_api_data_options', 'api_settings' );
 
-		    add_settings_field( 'data_setting_temp_type', 'Temperature Type', 'data_setting_temp_type', 'weather_api_data', 'api_settings' );
+		    add_settings_field( 'weather_api_temp_type', 'Days', 'weather_api_temp_type', 'weather_api_data_options', 'api_settings' );
+
+		    // Register the settings
+		   register_setting('weather_api_data_options', 'weather_api_key');
+		   register_setting('weather_api_data_options', 'weather_api_location');
+		   register_setting('weather_api_data_options', 'weather_api_days');
+		   register_setting('weather_api_data_options', 'weather_api_temp_type');
 		    
 		}
 	}
@@ -89,46 +94,28 @@ Text Domain:  display-real-time-weather-api-data
 	    echo '<p>Here you can set all the options for using the API</p>';
 	}
 
-	function data_setting_api_key() {
-	    $options = get_option( 'weather_api_data_options' );
-	    echo "<input id='data_setting_api_key' name='data_setting_api_key' type='text' value='" .$options['api_key']. "' />";
+	function weather_api_key() {
+	    $api_key = get_option( 'weather_api_key' );
+	    echo "<input id='data_setting_api_key' name='weather_api_key' type='text' value='" .$api_key. "' />";
 	}
 
-	function data_setting_location() {
-	    $options = get_option( 'weather_api_data_options' );
-	    echo "<input id='data_setting_location' name='data_setting_location' type='text' value='" .$options['location']. "' />";
+	function weather_api_location() {
+	    $location = get_option( 'weather_api_location' );
+	    echo "<input id='data_setting_location' name='weather_api_location' type='text' value='" .$location. "' />";
 	}
 
-	function data_setting_days() {
-	    $options = get_option( 'weather_api_data_options' );
-	    echo "<input id='data_setting_days' name='data_setting_days' type='number' min='1' max='10' value='" .$options['days']. "' />";
+	function weather_api_days() {
+	    $days = get_option( 'weather_api_days' );
+	    echo "<input id='data_setting_days' name='weather_api_days' type='number' min='1' max='10' value='" .$days. "' />";
 	}
 
-	function data_setting_temp_type() {
-	    $options = get_option( 'weather_api_data_options' );
-	  
-	    echo "<select name='data_setting_temp_type' id='data_setting_temp_type'><option value='temp_c'>".strtoupper('celsius')." (℃)</option><option value='temp_f'>".strtoupper('fahrenheit')." (℉)</option></select>";
+	function weather_api_temp_type() {
+	    $temp_type = get_option( 'weather_api_temp_type' ); ?>
+	    <select name='weather_api_temp_type' id='data_setting_temp_type'>
+	    	<option value='temp_c' <?php selected($temp_type, 'temp_c'); ?> > <?php echo strtoupper('celsius'); ?> (℃)</option>
+	    	<option value='temp_f' <?php selected($temp_type, 'temp_f'); ?> > <?php echo strtoupper('fahrenheit'); ?> (℉)</option>
+	    </select>
+	<?php
 	}
 
-	// public function getWeatherApiData(){
-	// 	//$url = 'http://api.weatherapi.com/v1/forecast.json?key=1231e2e03e0f48cfb6375659232106&q=chandigarh&days=3&aqi=yes&alerts=yes';
-	// 	$options = get_option('plugin_options');
-	// 	print_r($options);
-	// }
-
-	add_action('admin_post_submit-form', 'handle_form_action');
-
-	function handle_form_action(){
-	    global $wpdb;
-	    $key = $_POST['data_setting_api_key'];
-	    $location = $_POST['data_setting_location'];
-	    $data = array('key'=>$key,'location'=>$location);
-	    $wpdb->insert( 'wp_weather_data', $data);
-
-	    // redirect after insert alert
-	    wp_redirect(admin_url('admin.php?page=weather_api_data'));
-	    die();
-
-
-	} 
 
