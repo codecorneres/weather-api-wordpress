@@ -14,7 +14,7 @@
             <div>Wind:= echo $data->wind->speed; km/h</div>
         </div>
     </div>';
-    $apiKey = esc_attr(get_option('drt_weather_api_data_options'));
-    return $apiKey;
+    $options = get_option('weather_api_data_options');
+    return $options;
   }
   add_shortcode('weathertoday', 'displayWeather');
