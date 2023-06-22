@@ -14,52 +14,62 @@ Text Domain:  display-real-time-weather-api-data
 	//Define Dirpath for hooks
 	define( 'DIR_PATH', plugin_dir_path( __FILE__ ) );
 
-	wp_enqueue_script('script', plugins_url( '/js/script.js' , __FILE__ ) , array( 'jquery' ),'',true );
-       
+
+    wp_enqueue_script('script', plugins_url( '/js/script.js' , __FILE__ ) , array( 'jquery' ),'',true );
+   
     wp_localize_script( 'ajax', 'MyAjax', array( 'ajaxurl' => admin_url( 'admin-ajax.php')));
 
     wp_enqueue_style( 'style', plugins_url( '/css/style.css', __FILE__ ),array(),'all' );
 
-    include('includes/shortcodes.php');
+    
+	include('includes/shortcodes.php');
 
-	function drtwad_add_settings_page() {
-	    add_options_page( 'Real Time Weather API Data', 'Real Time Weather API Data', 'manage_options', 'drt_weather_api_data', 'drtwad_render_plugin_settings_page' );
+    if (!function_exists('add_settings_page')){
+		function add_settings_page() {
+		    add_options_page( 'Weather API Data', 'Weather API Data', 'manage_options', 'weather_api_data', 'render_plugin_settings_page' );
+		}
 	}
-	add_action( 'admin_menu', 'drtwad_add_settings_page' );
+	add_action( 'admin_menu', 'add_settings_page' );
 
 
-	function drtwad_render_plugin_settings_page() {
+	function render_plugin_settings_page() {
 		 settings_errors(); 
 	    ?>
 	    <h2>Real Time Weather API Data Settings</h2>
 	    <form action="options.php" method="post">
 	        <?php 
-		        settings_fields( 'drt_weather_api_data_options' );
-		        do_settings_sections( 'drt_weather_api_data' ); 
-		        submit_button( 'Save Settings' );
+		        settings_fields( 'weather_api_data_options' );
+		        do_settings_sections( 'weather_api_data' ); 
+		        submit_button( 'Save Settings' );	
 	        ?>
 	    </form>
 	    <?php
+
+	     $test = do_shortcode( '[weathertoday]' );
+	     print_r($test);
 	}
 
-	function register_settings() {
+	if (!function_exists('register_settings')){
 
-	    register_setting( 'drt_weather_api_data_options', 'drt_weather_api_data_options', 'drt_weather_api_data_options_validate' );
+		function register_settings(){
 
-	    add_settings_section( 'api_settings', 'API Settings', 'drtwa_data_section_text', 'drt_weather_api_data' );
+		    register_setting( 'weather_api_data_options', 'weather_api_data_options', 'weather_api_data_options_validate' );
 
-	    add_settings_field( 'drtwa_data_setting_api_key', 'API Key', 'drtwa_data_setting_api_key', 'drt_weather_api_data', 'api_settings' );
+		    add_settings_section( 'api_settings', 'API Settings', 'data_section_text', 'weather_api_data' );
 
-	    add_settings_field( 'drtwa_data_setting_location', 'Location', 'drtwa_data_setting_location', 'drt_weather_api_data', 'api_settings' );
+		    add_settings_field( 'data_setting_api_key', 'API Key', 'data_setting_api_key', 'weather_api_data', 'api_settings' );
 
-	    add_settings_field( 'drtwa_data_setting_days', 'Days', 'drtwa_data_setting_days', 'drt_weather_api_data', 'api_settings' );
+		    add_settings_field( 'data_setting_location', 'Location', 'data_setting_location', 'weather_api_data', 'api_settings' );
 
-	    add_settings_field( 'drtwa_data_setting_temp_type', 'Temperature Type', 'drtwa_data_setting_temp_type', 'drt_weather_api_data', 'api_settings' );
-	    
+		    add_settings_field( 'data_setting_days', 'Days', 'data_setting_days', 'weather_api_data', 'api_settings' );
+
+		    add_settings_field( 'data_setting_temp_type', 'Temperature Type', 'data_setting_temp_type', 'weather_api_data', 'api_settings' );
+		    
+		}
 	}
 	add_action( 'admin_init', 'register_settings' );
 
-	function drt_weather_api_data_options_validate( $input ) {
+	function weather_api_data_options_validate( $input ) {
 
 	    $newinput['api_key'] = trim( $input['api_key'] );
 
@@ -70,32 +80,36 @@ Text Domain:  display-real-time-weather-api-data
     	return $newinput;
 	}
 
-	function drtwa_data_section_text() {
+	function data_section_text() {
 	    echo '<p>Here you can set all the options for using the API</p>';
 	}
 
-	function drtwa_data_setting_api_key() {
-	    $options = get_option( 'drt_weather_api_data_options' );
-	    echo "<input id='drtwa_data_setting_api_key' name='drt_weather_api_data_options[api_key]' type='text' value='" . esc_attr( $options['api_key'] ) . "' />";
+	function data_setting_api_key() {
+	    $options = get_option( 'weather_api_data_options' );
+	    echo "<input id='data_setting_api_key' name='data_setting_api_key' type='text' value='" . esc_attr( $options['api_key'] ) . "' />";
 	}
 
-	function drtwa_data_setting_location() {
-	    $options = get_option( 'drt_weather_api_data_options' );
-	    echo "<input id='drtwa_data_setting_location' name='drt_weather_api_data_options[location]' type='text' value='" . esc_attr( $options['location'] ) . "' />";
+	function data_setting_location() {
+	    $options = get_option( 'weather_api_data_options' );
+	    echo "<input id='data_setting_location' name='data_setting_location' type='text' value='" . esc_attr( $options['location'] ) . "' />";
 	}
 
-	function drtwa_data_setting_days() {
-	    $options = get_option( 'drt_weather_api_data_options' );
-	    echo "<input id='drtwa_data_setting_days' name='drt_weather_api_data_options[days]' type='number' min='1' max='10' value='" . esc_attr( $options['days'] ) . "' />";
+	function data_setting_days() {
+	    $options = get_option( 'weather_api_data_options' );
+	    echo "<input id='data_setting_days' name='data_setting_days' type='number' min='1' max='10' value='" . esc_attr( $options['days'] ) . "' />";
 	}
 
-	function drtwa_data_setting_temp_type() {
-	    $options = get_option( 'drt_weather_api_data_options' );
+	function data_setting_temp_type() {
+	    $options = get_option( 'weather_api_data_options' );
 	  
-	    echo "<select name='drt_weather_api_data_options[temp_type]' id='drtwa_data_setting_temp_type'><option value='temp_c'>".strtoupper('celsius')." (℃)</option><option value='temp_f'>".strtoupper('fahrenheit')." (℉)</option></select>";
+	    echo "<select name='data_setting_temp_type' id='data_setting_temp_type'><option value='temp_c'>".strtoupper('celsius')." (℃)</option><option value='temp_f'>".strtoupper('fahrenheit')." (℉)</option></select>";
 	}
 
-	public function getWeatherApiData($url=''){
-		$url = 'http://api.weatherapi.com/v1/forecast.json?key=1231e2e03e0f48cfb6375659232106&q=chandigarh&days=3&aqi=yes&alerts=yes';
-	
-	}
+	// public function getWeatherApiData(){
+	// 	//$url = 'http://api.weatherapi.com/v1/forecast.json?key=1231e2e03e0f48cfb6375659232106&q=chandigarh&days=3&aqi=yes&alerts=yes';
+	// 	$options = get_option('plugin_options');
+	// 	print_r($options);
+	// }
+
+
+
