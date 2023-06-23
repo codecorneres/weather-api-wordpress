@@ -45,12 +45,6 @@ Text Domain:  display-real-time-weather-api-data
 	        ?>
 	    </form>
 	    <?php
-
-	     $test = do_shortcode( '[weathertoday]' );
-	  
-	     echo "<pre>";
-	     print_r( $test);
-	     echo "</pre>";
 	}
 
 	if (!function_exists('register_settings')){
@@ -69,7 +63,7 @@ Text Domain:  display-real-time-weather-api-data
 
 		    add_settings_field( 'weather_api_temp_type', 'Days', 'weather_api_temp_type', 'weather_api_data_options', 'api_settings' );
 
-		    // Register the settings
+		   // Register the settings
 		   register_setting('weather_api_data_options', 'weather_api_key');
 		   register_setting('weather_api_data_options', 'weather_api_location');
 		   register_setting('weather_api_data_options', 'weather_api_days');
