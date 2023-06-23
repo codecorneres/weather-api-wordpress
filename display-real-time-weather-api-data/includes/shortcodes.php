@@ -24,7 +24,7 @@
     $cureent_temp = ($temp_type == 'temp_c') ? $data['current']['temp_c'].'°C' : $data['current']['temp_f'].'°F';
 
     $weatherHtml = "";
-    $weatherHtml .= '<div class="report-container">
+    $weatherHtml .= '<div class="weather-report-container">
                         <h2> Weather Status</h2>
                         <div class="weather">
                             <div class="current-weather-icon">
