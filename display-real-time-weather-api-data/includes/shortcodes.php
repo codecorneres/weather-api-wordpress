@@ -41,7 +41,36 @@
                             <div>Wind: '.$data['current']    ['wind_kph'].' km/h</div>
                         </div>
                     </div>';
+                if($days > 1 ):
+    $weatherHtml .= '<div class="forecast-weather-container">
+                        <h2>Forecast Days Status</h2>';
+                        foreach ($data['forecast']['forecastday'] as $key => $fdayValue):
+
+                            $forecast_max_temp = ($temp_type == 'temp_c') ? $fdayValue['day']['maxtemp_c'].'°C' : $fdayValue['day']['maxtemp_f'].'°F';
+                            $forecast_min_temp = ($temp_type == 'temp_c') ? $fdayValue['day']['mintemp_c'].'°C' : $fdayValue['day']['mintemp_f'].'°F';
+
+    $weatherHtml .=     '<div class="forecast-weather">
+                            <div class="forecast-day-grid">
+                                <div class="forecast-date"> DATE : '.$fdayValue['date'].'</div>
+                                <div class="forecast-day-text">'.$fdayValue['day']['condition']['text'].'</div>
+                                <div class="forecast-day-icon"><img src="https:'.$fdayValue['day']['condition']['icon'].'" class="forecast-weather-icon" /> </div>
+                                <div class="forecast-day"> 
+                                <div class="max-temp">Max: '.$forecast_max_temp.'</div>
+                                <div class="min-temp">Min: '.$forecast_min_temp.'</div> 
+                                </div>
+                            </div>';
+                        endforeach;
+                            // echo $days;
+                            // echo "<pre>";
+                            // print_r($data);
+                            // echo "</pre>";
+    $weatherHtml .=     '</div>
+                    </div>';
+                endif;
+                    
 
     return $weatherHtml;
   }
-  add_shortcode('weathertoday', 'displayWeather');
+  add_shortcode('weather_display', 'displayWeather');
+
+?>

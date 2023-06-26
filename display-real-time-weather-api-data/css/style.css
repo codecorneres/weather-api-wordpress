@@ -1,0 +1,13 @@
+.forecast-weather-container .forecast-weather {
+    display: flex;
+    padding-left: 10px;
+}
+
+#map { 
+	position: absolute; 
+	top: 0; 
+	bottom: 0; 
+	width: 50%; 
+	left: 500px;
+}
+ 

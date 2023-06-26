@@ -1,19 +1,19 @@
 =========== Display Real Time Weather API Data Plugin =========
-Contributors: (this should be a list of wordpress.org userid's)
-Donate link: https://example.com/
+Contributors: Code Corners
+Donate link: https://www.codecorners.com/
 Tags: tag1, tag2
-Requires at least: 4.7
-Tested up to: 5.4
-Stable tag: 4.3
+Requires at least: 1.0
+Tested up to: 1.0
+Stable tag: 1.0
 Requires PHP: 7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Here is a short description of the plugin.  This should be no more than 150 characters.  No markup here.
+This Plugin Display Weather Information on your site througth the shortcode.
 
 == Description ==
 
-This is the long description.  No limit, and you can use Markdown (as well as in the following sections).
+This Plugin display real time weather data information in the front-end. Add this shorcode "[weather_display]" for display weather information on your website anywhere.
 
 For backwards compatibility, if this section is missing, the full length of the short description will be used, and
 Markdown parsed.
@@ -53,16 +53,6 @@ Answer to foo bar dilemma.
 * A change since the previous version.
 * Another change.
 
-= 0.5 =
-* List versions from most recent at top to oldest at bottom.
-
-== Upgrade Notice ==
-
-= 1.0 =
-Upgrade notices describe the reason a user should upgrade.  No more than 300 characters.
-
-= 0.5 =
-This version fixes a security related bug.  Upgrade immediately.
 
 == A brief Markdown Example ==
 
