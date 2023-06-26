@@ -1,18 +1,33 @@
 mapboxgl.accessToken = 'pk.eyJ1Ijoic3VyYWprMTIzIiwiYSI6ImNsamNjajMxdzBuc2szdWtpcjBvNHp4Y3gifQ.hJXhyLQ8KdIHKZ8TWz6cHQ';
 
-  //console.log(mapboxgl.accessToken);
   const map = new mapboxgl.Map({
-      container: 'map', // container ID
-      style: 'mapbox://styles/mapbox/streets-v12', // style URL
-      center: [-74.5, 40], // starting position [lng, lat]
-      zoom: 9 // starting zoom
-      });
+                      container: 'map', // container ID
+                      style: 'mapbox://styles/mapbox/streets-v11', // style URL
+                      center: [-74.5, 40], // starting position [lng, lat]
+                      zoom: 9 // starting zoom
+                    });
+
+                    // // Add the control to the map.
+                   map.addControl(
+                      new MapboxGeocoder({
+                      accessToken: mapboxgl.accessToken,
+                      mapboxgl: mapboxgl
+                      })
+                    );
+                  // Initialize geocoder control
+                  // var geocoder = new MapboxGeocoder({
+                  //     accessToken: mapboxgl.accessToken,
+                  //     mapboxgl: mapboxgl,
+                  //     marker: false // Disable marker on the map
+                  // });
+
+                  // Add geocoder control to input field
+                  //document.getElementById('data_setting_location').appendChild(geocoder.onAdd(map));
+
 
       const locationInput = document.getElementById('data_setting_location');
 
-      //console.log(locationInput);
-
-      locationInput.addEventListener('input', updateMap);
+     locationInput.addEventListener('input', updateMap);
 
       function updateMap() {
           const location = locationInput.value;
@@ -33,3 +48,4 @@ mapboxgl.accessToken = 'pk.eyJ1Ijoic3VyYWprMTIzIiwiYSI6ImNsamNjajMxdzBuc2szdWtpc
               console.error('Error:', error);
           });
       }
+

@@ -60,10 +60,7 @@
                                 </div>
                             </div>';
                         endforeach;
-                            // echo $days;
-                            // echo "<pre>";
-                            // print_r($data);
-                            // echo "</pre>";
+                           
     $weatherHtml .=     '</div>
                     </div>';
                 endif;

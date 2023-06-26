@@ -17,11 +17,20 @@ Text Domain:  display-real-time-weather-api-data
 	ini_set('log_errors', 1);
 	ini_set('error_log', WP_CONTENT_DIR . '/error.log');
 
-	wp_enqueue_style( 'mapbox-style','https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css',array(),'stylesheet' );
-	wp_enqueue_script('mapbox-script','https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js' , array( 'jquery' ),'',true );
-    wp_enqueue_script('script', plugins_url( '/js/script.js' , __FILE__ ) , array( 'jquery' ),'',true );  
-    wp_localize_script( 'ajax', 'MyAjax', array( 'ajaxurl' => admin_url( 'admin-ajax.php')));
-    wp_enqueue_style( 'style', plugins_url( '/css/style.css', __FILE__ ),array(),'all' );
+    //function enqueue_mapbox_scripts() {
+
+	    wp_enqueue_style( 'mapbox-style','https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css',array(),'stylesheet' );
+		wp_enqueue_script('mapbox-script','https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js' , array( 'jquery' ),'',true );
+
+		wp_enqueue_script('geocoder-min','https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js', array( 'jquery' ),'',true);
+		wp_enqueue_style( 'geocoder-style','https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css',array(),'stylesheet' );
+
+	    wp_enqueue_script('script', plugins_url( '/js/script.js' , __FILE__ ) , array( 'jquery' ),'',true );  
+	    wp_localize_script( 'ajax', 'MyAjax', array( 'ajaxurl' => admin_url( 'admin-ajax.php')));
+	    wp_enqueue_style( 'style', plugins_url( '/css/style.css', __FILE__ ),array(),'all' );
+	//}
+
+	//add_action('wp_enqueue_scripts', 'enqueue_mapbox_scripts');
 
     
 	include('includes/shortcodes.php');
@@ -96,13 +105,6 @@ Text Domain:  display-real-time-weather-api-data
 	    }
 
     	return $newinput;
-    	//    $is_valid = make_api_call_to_validate_key($input);
-
-	    // if (!$is_valid) {
-	    //     add_settings_error('weather_api_key', 'invalid_api_key', 'Invalid API key entered.', 'error');
-	    // }
-
-	    // return $input;
 	}
 
 	function data_section_text() {
