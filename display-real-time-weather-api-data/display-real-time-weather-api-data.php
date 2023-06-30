@@ -24,6 +24,7 @@ Text Domain:  display-real-time-weather-api-data
 		
 		wp_enqueue_script('geocoder-min', plugins_url( '/js/mapbox-gl-geocoder.min.js' , __FILE__ ) , array( 'jquery' ),'',true );
 		wp_enqueue_style( 'geocoder-min-style','https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.css',array(),'stylesheet' );
+		wp_enqueue_style( 'map-geocoder-style','https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css',array(),'stylesheet' );
 	    
 
 	    wp_enqueue_script('script', plugins_url( '/js/script.js' , __FILE__ ) , array( 'jquery' ),'',true );  
