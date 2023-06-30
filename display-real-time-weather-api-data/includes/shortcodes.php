@@ -47,7 +47,7 @@
                                
                             </div>
                             <div class="location"> <span>Location:</span>'.$data['location']['name'].','.$data['location']['region'].','.$data['location']['country'].'.</div>
-                            <div class="time">
+                            <div class="current-weather-details">
                                 <div><span>Last Update Time:</span>'.$lastUpdateTime.' </div>
                                 <div><span>Humidity:</span>'.$data['current']['humidity'].' %</div>
                                 <div><span>Wind:</span>'.$data['current']    ['wind_kph'].' km/h</div>
