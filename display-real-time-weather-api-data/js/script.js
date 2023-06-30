@@ -34,11 +34,6 @@ input.addEventListener('input', function() {
 });
 
 mapboxgl.accessToken = 'pk.eyJ1Ijoic3VyYWprMTIzIiwiYSI6ImNsamk4eWF1czBxMDkzZ29lbml5bmh0NjcifQ.x25Lqctp4l23_IhTOO8deQ';
-// Initialize the Mapbox GL Geocoder control
-// var geocoder = new MapboxGeocoder({
-//   accessToken: mapboxgl.accessToken,
-//   mapboxgl: mapboxgl
-// });
 
  var map = new mapboxgl.Map({
                       container: 'map', // container ID

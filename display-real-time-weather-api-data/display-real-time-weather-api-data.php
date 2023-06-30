@@ -48,15 +48,17 @@ Text Domain:  display-real-time-weather-api-data
 			 settings_errors(); 
 		    ?>
 		    <h2>Real Time Weather API Data Settings</h2>
-		    <form action="options.php" method="post">
-		        <?php 
-			        settings_fields( 'weather_api_data_options' );
-			        do_settings_sections( 'weather_api_data_options' ); 
-			        submit_button( 'Save Settings' );	
-		        ?>
-		    </form>
+			<div class="real-time-weather-flex-row">
+				<form action="options.php" method="post">
+					<?php 
+						settings_fields( 'weather_api_data_options' );
+						do_settings_sections( 'weather_api_data_options' ); 
+						submit_button( 'Save Settings' );	
+					?>
+				</form>
 
-		    <div id="map"></div>
+				<div id="map"></div>
+			</div>
 		    <?php
 		}
 
