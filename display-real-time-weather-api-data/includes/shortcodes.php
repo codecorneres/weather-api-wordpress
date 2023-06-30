@@ -2,24 +2,32 @@
   function displayWeather() {
 
     $apiKey = get_option('weather_api_key');
+
     $location = get_option( 'weather_api_location' );
     $days = get_option( 'weather_api_days' );
     $temp_type = get_option( 'weather_api_temp_type' );
     $googleApiUrl = "https://api.weatherapi.com/v1/forecast.json?key=" . $apiKey . "&q=".$location."&days=".$days."&aqi=yes&alerts=yes";
 
-    $ch = curl_init();
+    $curl = curl_init();
 
-    curl_setopt($ch, CURLOPT_HEADER, 0);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_URL, $googleApiUrl);
-    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
-    curl_setopt($ch, CURLOPT_VERBOSE, 0);
-    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-    $response = curl_exec($ch);
+    curl_setopt_array($curl, array(
+      CURLOPT_URL => 'https://api.weatherapi.com/v1/forecast.json?key=1231e2e03e0f48cfb6375659232106&q=Rishikesh%2C%20Uttarakhand%2C%20India&days=5&aqi=yes&alerts=yes',
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_ENCODING => '',
+      CURLOPT_MAXREDIRS => 10,
+      CURLOPT_TIMEOUT => 0,
+      CURLOPT_FOLLOWLOCATION => true,
+      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+      CURLOPT_CUSTOMREQUEST => 'GET',
+    ));
 
-    curl_close($ch);
-    
+    $response = curl_exec($curl);
+
+    curl_close($curl);
+
     $data = json_decode($response,true);
+    
+    
     $lastUpdateTime = $data['current']['last_updated'];
     $cureent_temp = ($temp_type == 'temp_c') ? $data['current']['temp_c'].'°C' : $data['current']['temp_f'].'°F';
 
