@@ -17,20 +17,18 @@ Text Domain:  display-real-time-weather-api-data
 	ini_set('log_errors', 1);
 	ini_set('error_log', WP_CONTENT_DIR . '/error.log');
 
-    //function enqueue_mapbox_scripts() {
 
-	    wp_enqueue_style( 'mapbox-style','https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css',array(),'stylesheet' );
-		wp_enqueue_script('mapbox-script','https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js' , array( 'jquery' ),'',true );
-
-		wp_enqueue_script('geocoder-min','https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js', array( 'jquery' ),'',true);
-		wp_enqueue_style( 'geocoder-style','https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css',array(),'stylesheet' );
+		wp_enqueue_script('autocomplete-min',plugins_url( '/js/awesomplete.min.js' , __FILE__ ) , array( 'jquery' ),'',true );
+		wp_enqueue_style( 'awesomplete-min','https://cdnjs.cloudflare.com/ajax/libs/awesomplete/1.1.2/awesomplete.min.css',array(),'stylesheet' );
+		wp_enqueue_script('mapbox-script','https://api.mapbox.com/mapbox-gl-js/v2.5.1/mapbox-gl.js' , array( 'jquery' ),'',true );
+		
+		wp_enqueue_script('geocoder-min', plugins_url( '/js/mapbox-gl-geocoder.min.js' , __FILE__ ) , array( 'jquery' ),'',true );
+		wp_enqueue_style( 'geocoder-min-style','https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.7.2/mapbox-gl-geocoder.css',array(),'stylesheet' );
+	    
 
 	    wp_enqueue_script('script', plugins_url( '/js/script.js' , __FILE__ ) , array( 'jquery' ),'',true );  
 	    wp_localize_script( 'ajax', 'MyAjax', array( 'ajaxurl' => admin_url( 'admin-ajax.php')));
 	    wp_enqueue_style( 'style', plugins_url( '/css/style.css', __FILE__ ),array(),'all' );
-	//}
-
-	//add_action('wp_enqueue_scripts', 'enqueue_mapbox_scripts');
 
     
 	include('includes/shortcodes.php');
@@ -56,6 +54,7 @@ Text Domain:  display-real-time-weather-api-data
 			        submit_button( 'Save Settings' );	
 		        ?>
 		    </form>
+
 		    <div id="map"></div>
 		    <?php
 		}
@@ -134,4 +133,3 @@ Text Domain:  display-real-time-weather-api-data
 	    </select>
 	<?php
 	}
-
