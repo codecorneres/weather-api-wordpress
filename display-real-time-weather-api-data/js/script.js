@@ -44,7 +44,7 @@ mapboxgl.accessToken = 'pk.eyJ1Ijoic3VyYWprMTIzIiwiYSI6ImNsamk4eWF1czBxMDkzZ29lb
   var geocoder = new MapboxGeocoder({
                       accessToken: mapboxgl.accessToken,
                       mapboxgl: mapboxgl,
-                      //marker: false // Disable marker on the map
+                      marker: false // Disable marker on the map
                   });
 
 

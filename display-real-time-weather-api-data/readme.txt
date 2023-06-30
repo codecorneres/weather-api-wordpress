@@ -1,7 +1,7 @@
 =========== Display Real Time Weather API Data Plugin =========
 Contributors: Code Corners
 Donate link: https://www.codecorners.com/
-Tags: tag1, tag2
+Tags: weather, weather-api, real-time-weather
 Requires at least: 1.0
 Tested up to: 1.0
 Stable tag: 1.0
@@ -9,14 +9,12 @@ Requires PHP: 7.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-This Plugin Display Weather Information on your site througth the shortcode.
+This Plugin Display Weather Information on your site througth the shortcode "[weather_display]".
 
 == Description ==
 
-This Plugin display real time weather data information in the front-end. Add this shorcode "[weather_display]" for display weather information on your website anywhere.
+This Plugin display real time weather data information in the front-end. Add this shorcode "[weather_display]" for display weather information on your website anywhere. 
 
-For backwards compatibility, if this section is missing, the full length of the short description will be used, and
-Markdown parsed.
 
 A few notes about the sections above:
 
@@ -36,23 +34,23 @@ If no stable tag is provided, your users may not get the correct version of your
 
 = A question that someone might have =
 
-An answer to that question.
 
-= What about foo bar? =
+= What about Weather API Data Plugin? =
 
-Answer to foo bar dilemma.
+1. You can use PHP Code anywhere for display data : <?php echo do_shortcode('[weather_display]'); ?>
+2. Also use in wordpress any editor like: [weather_display]
+3. Use free api from here: link -> https://www.weatherapi.com/
+	login & get free weather api for admin.
 
 == Screenshots ==
 
-1. This screen shot description corresponds to screenshot-1.(png|jpg|jpeg|gif). Screenshots are stored in the /assets directory.
-2. This is the second screen shot
+1. First screenshot(Front-End): https://prnt.sc/9LA3mxu4dyin 
+2. Second screenshot (Back-End) : https://prnt.sc/kvGqxekG9S5K
 
 == Changelog ==
 
 = 1.0 =
-* A change since the previous version.
-* Another change.
-
+* Its a first developed version now.
 
 == A brief Markdown Example ==
 
@@ -62,15 +60,9 @@ Markdown is what the parser uses to process much of the readme file.
 
 Ordered list:
 
-1. Some feature
-1. Another feature
-1. Something else about the plugin
-
-Unordered list:
-
-* something
-* something else
-* third thing
+1. Show Current Weather Details
+2. Show Forecast Weather Days wise details 
+3. Its working on Free Api key
 
 Links require brackets and parenthesis:
 
@@ -82,4 +74,4 @@ Blockquotes are email style:
 
 And Backticks for code:
 
-`<?php code(); ?>`
+'<?php echo do_shortcode('[weather_display]'); ?>'
